@@ -1,0 +1,32 @@
+
+<div class="<?= $this->class ?> block"<?= $this->cssID ?><?php if ($this->style): ?> style="<?= $this->style ?>"<?php endif; ?>>
+  <?php if ($this->addCardImage): ?>
+    <figure class="card__image">
+      <?php $this->insert('picture_default', $this->picture); ?>
+
+      <?php if ($this->caption): ?>
+        <figcaption class="caption"><?= $this->caption ?></figcaption>
+      <?php endif; ?>
+    </figure>
+  <?php endif; ?>
+
+  <?php if ($this->addText || $this->headline): ?>
+    <div class="card__content">
+      <?php if ($this->headline): ?>
+        <<?= $this->hl ?> class="card__headline"><?= $this->headline ?></<?= $this->hl ?>>
+      <?php endif; ?>
+
+      <?php if ($this->addText): ?>
+      <div class="card__description">
+        <?= $this->text ?>
+      </div>
+      <?php endif; ?>
+
+      <?php if ($this->url): ?>
+        <div class="card__link">
+          <a href="<?= $this->href ?>" title="<?=$this->linkTitle ?>" <?= $this->rel ?> <?= $this->target ?>><?= $this->link ?></a>
+        </div>
+      <?php endif; ?>
+    </div>
+  <?php endif; ?>
+</div>
