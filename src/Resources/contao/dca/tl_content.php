@@ -17,7 +17,7 @@ $GLOBALS['TL_DCA']['tl_content']['palettes']['__selector__'][] = 'addCardImage';
 $GLOBALS['TL_DCA']['tl_content']['palettes']['card'] = '{type_legend},type,headline;'
                                                        .'{text_legend},addText;'
                                                        .'{image_legend},addCardImage;'
-                                                       .'{link_legend},url,target,linkTitle,titleText;'
+                                                       .'{link_legend},cardUrl,cardTarget,cardLinkTitle,cardTitleText;'
                                                        .'{template_legend:hide},customTpl;'
                                                        .'{protected_legend:hide},protected;'
                                                        .'{expert_legend:hide},guests,cssID,space;'
