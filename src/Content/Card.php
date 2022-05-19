@@ -68,7 +68,7 @@ class Card extends ContentElement
 
         $this->Template->url = $this->cardUrl;
         $this->Template->href = $this->cardUrl;
-        $this->Template->linkTitle = $this->cardLinkTitle;
+        $this->Template->link = $this->cardLinkTitle;
 
         if ($this->cardTitleText)
         {
