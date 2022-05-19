@@ -66,8 +66,9 @@ class Card extends ContentElement
             }
         }
 
+        $this->Template->url = $this->cardUrl;
         $this->Template->href = $this->cardUrl;
-        $this->Template->link = $this->cardLinkTitle;
+        $this->Template->linkTitle = $this->cardLinkTitle;
 
         if ($this->cardTitleText)
         {
@@ -83,9 +84,9 @@ class Card extends ContentElement
 
         // Unset the title attributes in the back end (see #6258)
         if (TL_MODE === 'BE') {
-            $this->Template->url = '';
-            $this->Template->titleText = '';
-            $this->Template->linkTitle = '';
+            $this->Template->cardUrl = '';
+            $this->Template->cardZitleText = '';
+            $this->Template->cardLinkTitle = '';
         }
     }
 }
