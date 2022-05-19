@@ -66,16 +66,16 @@ class Card extends ContentElement
             }
         }
 
-        $this->Template->href = $this->url;
-        $this->Template->link = $this->linkTitle;
+        $this->Template->href = $this->cardUrl;
+        $this->Template->link = $this->cardLinkTitle;
 
-        if ($this->titleText)
-		{
-			$this->Template->linkTitle = StringUtil::specialchars($this->titleText);
-		}
+        if ($this->cardTitleText)
+        {
+            $this->Template->linkTitle = StringUtil::specialchars($this->cardTitleText);
+        }
 
         // Override the link target
-        if ($this->target)
+        if ($this->cardTarget)
         {
             $this->Template->target = ' target="_blank"';
             $this->Template->rel = ' rel="noreferrer noopener"';

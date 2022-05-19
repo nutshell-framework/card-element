@@ -26,16 +26,16 @@ $GLOBALS['TL_DCA']['tl_content']['palettes']['card'] = '{type_legend},type,headl
 $GLOBALS['TL_DCA']['tl_content']['subpalettes']['addText'] = 'text';
 $GLOBALS['TL_DCA']['tl_content']['subpalettes']['addCardImage'] = 'singleSRC,size';
 
-$GLOBALS['TL_DCA']['tl_content']['fields']['url'] = [
+$GLOBALS['TL_DCA']['tl_content']['fields']['cardUrl'] = [
     'label' => &$GLOBALS['TL_LANG']['MSC']['url'],
     'exclude' => true,
     'search' => true,
     'inputType' => 'text',
     'eval' => ['rgxp' => 'url', 'decodeEntities' => true, 'maxlength' => 255, 'dcaPicker' => true, 'tl_class' => 'w50 wizard'],
-    'sql' => "varchar(255) NOT NULL default ''",
+    'sql' => "text NULL"
 ];
 
-$GLOBALS['TL_DCA']['tl_content']['fields']['target'] = [
+$GLOBALS['TL_DCA']['tl_content']['fields']['cardTarget'] = [
     'label' => &$GLOBALS['TL_LANG']['MSC']['target'],
     'exclude' => true,
     'inputType' => 'checkbox',
@@ -43,7 +43,7 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['target'] = [
     'sql' => "char(1) NOT NULL default ''",
 ];
 
-$GLOBALS['TL_DCA']['tl_content']['fields']['linkTitle'] = [
+$GLOBALS['TL_DCA']['tl_content']['fields']['cardLinkTitle'] = [
     'label' => &$GLOBALS['TL_LANG']['tl_content']['linkTitle'],
     'exclude' => true,
     'search' => true,
@@ -52,7 +52,7 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['linkTitle'] = [
     'sql' => "varchar(255) NOT NULL default ''",
 ];
 
-$GLOBALS['TL_DCA']['tl_content']['fields']['titleText'] = [
+$GLOBALS['TL_DCA']['tl_content']['fields']['cardTitleText'] = [
     'label' => &$GLOBALS['TL_LANG']['tl_content']['titleText'],
     'exclude' => true,
     'search' => true,
