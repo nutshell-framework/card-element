@@ -1,0 +1,7 @@
+services:
+  _defaults:
+    autoconfigure: true
+
+  Nutshell\CardElement\Migration\LinkMigration:
+    arguments: [ '@database_connection' ]
+    tags: [ 'contao.migration' ]

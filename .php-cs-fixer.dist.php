@@ -52,7 +52,7 @@ return $config->setRules([
         'strict_comparison' => true,
         'strict_param' => true,
     ])
-    ->setFinder(PhpCsFixer\Finder::create()->in([__DIR__.'/src']))
+    ->setFinder(PhpCsFixer\Finder::create()->in([__DIR__.'/src',__DIR__.'/contao']))
     ->setRiskyAllowed(true)
     ->setUsingCache(false)
 ;

@@ -20,7 +20,7 @@
     "source": "https://github.com/nutshell-framework/card-element"
   },
   "require": {
-    "php": ">=5.6",
+    "php": ">=7.0",
     "contao/core-bundle": "^4.4"
   },
   "require-dev": {
@@ -34,5 +34,11 @@
   },
   "extra": {
     "contao-manager-plugin": "Nutshell\\CardElement\\ContaoManager\\Plugin"
+  },
+  "config": {
+    "allow-plugins": {
+      "contao-components/installer": true,
+      "contao/manager-plugin": true
+    }
   }
 }

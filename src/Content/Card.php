@@ -5,7 +5,7 @@ declare(strict_types=1);
 /*
  * Card Element for Contao Open Source CMS.
  *
- * @copyright  Copyright (c) 2021, Erdmann & Freunde
+ * @copyright  Copyright (c) 2022, Erdmann & Freunde
  * @author     Erdmann & Freunde <https://erdmann-freunde.de>
  * @license    MIT
  * @link       http://github.com/nutshell-framework/card-element
@@ -70,14 +70,12 @@ class Card extends ContentElement
         $this->Template->href = $this->cardUrl;
         $this->Template->link = $this->cardLinkTitle;
 
-        if ($this->cardTitleText)
-        {
+        if ($this->cardTitleText) {
             $this->Template->linkTitle = StringUtil::specialchars($this->cardTitleText);
         }
 
         // Override the link target
-        if ($this->cardTarget)
-        {
+        if ($this->cardTarget) {
             $this->Template->target = ' target="_blank"';
             $this->Template->rel = ' rel="noreferrer noopener"';
         }

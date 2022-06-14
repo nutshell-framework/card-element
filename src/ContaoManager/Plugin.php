@@ -5,7 +5,7 @@ declare(strict_types=1);
 /*
  * Card Element for Contao Open Source CMS.
  *
- * @copyright  Copyright (c) 2021, Erdmann & Freunde
+ * @copyright  Copyright (c) 2022, Erdmann & Freunde
  * @author     Erdmann & Freunde <https://erdmann-freunde.de>
  * @license    MIT
  * @link       http://github.com/nutshell-framework/card-element
@@ -18,7 +18,7 @@ use Contao\ManagerPlugin\Bundle\BundlePluginInterface;
 use Contao\ManagerPlugin\Bundle\Config\BundleConfig;
 use Contao\ManagerPlugin\Bundle\Config\ConfigInterface;
 use Contao\ManagerPlugin\Bundle\Parser\ParserInterface;
-use Nutshell\CardElement\NutshellCardElement;
+use Nutshell\CardElement\NutshellCardElementBundle;
 
 class Plugin implements BundlePluginInterface
 {
@@ -30,12 +30,8 @@ class Plugin implements BundlePluginInterface
     public function getBundles(ParserInterface $parser)
     {
         return [
-            BundleConfig::create(NutshellCardElement::class)
-                ->setLoadAfter(
-                    [
-                        ContaoCoreBundle::class,
-                    ]
-                ),
+            BundleConfig::create(NutshellCardElementBundle::class)
+                ->setLoadAfter([ContaoCoreBundle::class]),
         ];
     }
 }
