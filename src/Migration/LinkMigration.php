@@ -41,6 +41,11 @@ class LinkMigration extends AbstractMigration
             !isset($columns['cardtarget']) &&
             !isset($columns['cardlinktitle']) &&
             !isset($columns['cardtitletext']);
+
+        return
+            $this->connection->fetchOne(
+                "SELECT COUNT(*) FROM tl_content WHERE type = 'card'"
+            ) > 0;
     }
 
     public function run(): MigrationResult
