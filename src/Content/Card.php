@@ -18,6 +18,7 @@ use Contao\ContentElement;
 use Contao\FilesModel;
 use Contao\StringUtil;
 use Contao\Validator;
+use Contao\System;
 
 class Card extends ContentElement
 {
@@ -33,12 +34,10 @@ class Card extends ContentElement
      */
     protected function compile()
     {
-        $this->text = StringUtil::toHtml5($this->text);
-
         // Add the static files URL to images
-        if (TL_FILES_URL) {
-            $path = Config::get('uploadPath').'/';
-            $this->text = str_replace(' src="'.$path, ' src="'.TL_FILES_URL.$path, $this->text);
+        if ($staticUrl = System::getContainer()->get('contao.assets.files_context')->getStaticUrl()) {
+            $path = Config::get('uploadPath') . '/';
+            $this->text = str_replace(' src="' . $path, ' src="' . $staticUrl . $path, $this->text);
         }
 
         $this->Template->text = StringUtil::encodeEmail($this->text);
@@ -52,9 +51,22 @@ class Card extends ContentElement
                 if (!Validator::isUuid($this->singleSRC)) {
                     $this->Template->text = '<p class="error">'.$GLOBALS['TL_LANG']['ERR']['version2format'].'</p>';
                 }
-            } elseif (is_file(TL_ROOT.'/'.$objModel->path)) {
+            } elseif ($objModel !== null && is_file(System::getContainer()->getParameter('kernel.project_dir') . '/' . $objModel->path)) {
                 $this->singleSRC = $objModel->path;
-                static::addImageToTemplate($this->Template, $this->arrData);
+
+                $figure = System::getContainer()
+                ->get('contao.image.studio')
+                ->createFigureBuilder()
+                ->from($objModel->path)
+                ->setSize($this->heroSize)
+                ->setMetadata($this->objModel->getOverwriteMetadata())
+                ->enableLightbox((bool) $this->fullsize)
+                ->buildIfResourceExists();
+
+                if (null !== $figure)
+                {
+                    $figure->applyLegacyTemplateData($this->Template, $this->imagemargin, $this->floating);
+                }
             }
         }
 
@@ -73,7 +85,9 @@ class Card extends ContentElement
         }
 
         // Unset the title attributes in the back end (see #6258)
-        if (TL_MODE === 'BE') {
+        $request = System::getContainer()->get('request_stack')->getCurrentRequest();
+
+        if ($request && System::getContainer()->get('contao.routing.scope_matcher')->isBackendRequest($request)) {
             $this->Template->cardUrl = '';
             $this->Template->cardZitleText = '';
             $this->Template->cardLinkTitle = '';
