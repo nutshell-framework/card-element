@@ -44,29 +44,20 @@ class Card extends ContentElement
         $this->Template->addImage = false;
 
         // Add an image
-        if ($this->addCardImage && $this->singleSRC) {
-            $objModel = FilesModel::findByUuid($this->singleSRC);
+        if ($this->addCardImage) {
 
-            if (null === $objModel) {
-                if (!Validator::isUuid($this->singleSRC)) {
-                    $this->Template->text = '<p class="error">'.$GLOBALS['TL_LANG']['ERR']['version2format'].'</p>';
-                }
-            } elseif ($objModel !== null && is_file(System::getContainer()->getParameter('kernel.project_dir') . '/' . $objModel->path)) {
-                $this->singleSRC = $objModel->path;
+            $figure = System::getContainer()
+            ->get('contao.image.studio')
+            ->createFigureBuilder()
+            ->from($this->singleSRC)
+            ->setSize($this->size)
+            ->setMetadata($this->objModel->getOverwriteMetadata())
+            ->enableLightbox((bool) $this->fullsize)
+            ->buildIfResourceExists();
 
-                $figure = System::getContainer()
-                ->get('contao.image.studio')
-                ->createFigureBuilder()
-                ->from($objModel->path)
-                ->setSize($this->heroSize)
-                ->setMetadata($this->objModel->getOverwriteMetadata())
-                ->enableLightbox((bool) $this->fullsize)
-                ->buildIfResourceExists();
-
-                if (null !== $figure)
-                {
-                    $figure->applyLegacyTemplateData($this->Template, $this->imagemargin, $this->floating);
-                }
+            if (null !== $figure)
+            {
+                $figure->applyLegacyTemplateData($this->Template, $this->imagemargin, $this->floating);
             }
         }
 
@@ -89,7 +80,7 @@ class Card extends ContentElement
 
         if ($request && System::getContainer()->get('contao.routing.scope_matcher')->isBackendRequest($request)) {
             $this->Template->cardUrl = '';
-            $this->Template->cardZitleText = '';
+            $this->Template->cardTitleText = '';
             $this->Template->cardLinkTitle = '';
         }
     }
