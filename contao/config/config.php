@@ -16,6 +16,6 @@ use Nutshell\CardElement\Content\Card;
 /*
  * Nutshell Card ContentElement
  */
-Contao\ArrayUtil::arrayInsert($GLOBALS['TL_CTE']['media'], 4, [
+\Contao\ArrayUtil::arrayInsert($GLOBALS['TL_CTE']['media'], 4, [
     'card' => Card::class,
 ]);
