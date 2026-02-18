@@ -31,7 +31,7 @@ class LinkMigration extends AbstractMigration
 
     public function shouldRun(): bool
     {
-        $schemaManager = $this->connection->getSchemaManager();
+        $schemaManager = $this->connection->createSchemaManager();
 
         $columns = $schemaManager->listTableColumns('tl_content');
 
@@ -41,16 +41,11 @@ class LinkMigration extends AbstractMigration
             !isset($columns['cardtarget']) &&
             !isset($columns['cardlinktitle']) &&
             !isset($columns['cardtitletext']);
-
-        return
-            $this->connection->fetchOne(
-                "SELECT COUNT(*) FROM tl_content WHERE type = 'card'"
-            ) > 0;
     }
 
     public function run(): MigrationResult
     {
-        $this->connection->executeQuery("
+        $this->connection->executeStatement("
             ALTER TABLE
                 tl_content
 
@@ -60,7 +55,7 @@ class LinkMigration extends AbstractMigration
             ADD cardTitleText varchar(255) NOT NULL DEFAULT ''
         ");
 
-        $stmt = $this->connection->prepare('
+        $this->connection->executeStatement('
             UPDATE
                 tl_content
             SET
@@ -70,10 +65,7 @@ class LinkMigration extends AbstractMigration
                 cardTitleText = titleText
             WHERE
                 type = :type
-        ');
-
-        $stmt->bindValue('type', 'card');
-        $stmt->execute();
+        ', ['type' => 'card']);
 
         return $this->createResult(true, 'Use separate link fields for card-element');
     }
