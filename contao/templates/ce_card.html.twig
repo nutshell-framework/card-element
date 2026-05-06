@@ -1,0 +1,31 @@
+{% set hasImage = addCardImage and picture is defined %}
+
+<div class="{{ class }} block"{{ cssID|raw }}{% if style %} style="{{ style }}"{% endif %}>
+  {% if hasImage %}
+    <figure class="card__image">
+      {{ include('@Contao/picture_default.html.twig', picture, false) }}
+
+      {% if caption %}
+        <figcaption class="caption">{{ caption }}</figcaption>
+      {% endif %}
+    </figure>
+  {% endif %}
+
+  {% if addText or headline %}
+    <div class="card__content">
+      {% if headline %}
+        <{{ hl }} class="card__headline">{{ headline }}</{{ hl }}>
+      {% endif %}
+
+      {% if addText %}
+        <div class="card__description">{{ text|default|sanitize_html('contao')|csp_inline_styles|insert_tag_raw }}</div>
+      {% endif %}
+
+      {% if url %}
+        <div class="card__link">
+          <a href="{{ href }}" title="{{ linkTitle ?? '' }}"{{ (rel ?? '')|raw }}{{ (target ?? '')|raw }}>{{ link }}</a>
+        </div>
+      {% endif %}
+    </div>
+  {% endif %}
+</div>

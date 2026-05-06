@@ -17,7 +17,6 @@ use Contao\Config;
 use Contao\ContentElement;
 use Contao\FilesModel;
 use Contao\StringUtil;
-use Contao\Validator;
 use Contao\System;
 
 class Card extends ContentElement
@@ -36,28 +35,32 @@ class Card extends ContentElement
     {
         // Add the static files URL to images
         if ($this->text && $staticUrl = System::getContainer()->get('contao.assets.files_context')->getStaticUrl()) {
-            $path = Config::get('uploadPath') . '/';
-            $this->text = str_replace(' src="' . $path, ' src="' . $staticUrl . $path, $this->text);
+            $path = Config::get('uploadPath').'/';
+            $this->text = str_replace(' src="'.$path, ' src="'.$staticUrl.$path, $this->text);
         }
 
         $this->Template->text = StringUtil::encodeEmail($this->text);
-        $this->Template->addImage = false;
+        $this->Template->addCardImage = false;
 
         // Add an image
-        if ($this->addCardImage) {
+        if ($this->addCardImage && $this->singleSRC) {
+            $objModel = FilesModel::findByUuid($this->singleSRC);
 
-            $figure = System::getContainer()
-            ->get('contao.image.studio')
-            ->createFigureBuilder()
-            ->from($this->singleSRC)
-            ->setSize($this->size)
-            ->setMetadata($this->objModel->getOverwriteMetadata())
-            ->enableLightbox((bool) $this->fullsize)
-            ->buildIfResourceExists();
+            if (null !== $objModel && is_file(System::getContainer()->getParameter('kernel.project_dir').'/'.$objModel->path)) {
+                $figure = System::getContainer()
+                    ->get('contao.image.studio')
+                    ->createFigureBuilder()
+                    ->from($objModel->path)
+                    ->setSize($this->size)
+                    ->setOverwriteMetadata($this->objModel->getOverwriteMetadata())
+                    ->enableLightbox((bool) $this->fullsize)
+                    ->buildIfResourceExists()
+                ;
 
-            if (null !== $figure)
-            {
-                $figure->applyLegacyTemplateData($this->Template, $this->imagemargin, $this->floating);
+                if (null !== $figure) {
+                    $figure->applyLegacyTemplateData($this->Template, $this->imagemargin, $this->floating);
+                    $this->Template->addCardImage = true;
+                }
             }
         }
 
