@@ -1,5 +1,7 @@
+{% set hasImage = addCardImage and picture is defined %}
+
 <div class="{{ class }} block"{{ cssID|raw }}{% if style %} style="{{ style }}"{% endif %}>
-  {% if addCardImage %}
+  {% if hasImage %}
     <figure class="card__image">
       {{ include('@Contao/picture_default.html.twig', picture, false) }}
 
@@ -16,14 +18,12 @@
       {% endif %}
 
       {% if addText %}
-      <div class="card__description">
-        {{ text|raw }}
-      </div>
+        <div class="card__description">{{ text|raw }}</div>
       {% endif %}
 
       {% if url %}
         <div class="card__link">
-          <a href="{{ href }}" title="{{ linkTitle }}" {{ rel|raw }} {{ target|raw }}>{{ link }}</a>
+          <a href="{{ href }}" title="{{ linkTitle ?? '' }}"{{ (rel ?? '')|raw }}{{ (target ?? '')|raw }}>{{ link }}</a>
         </div>
       {% endif %}
     </div>
