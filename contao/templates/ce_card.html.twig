@@ -5,7 +5,7 @@
     <figure class="card__image">
       {{ include('@Contao/picture_default.html.twig', picture, false) }}
 
-      {% if caption %}
+      {% if caption ?? false %}
         <figcaption class="caption">{{ caption }}</figcaption>
       {% endif %}
     </figure>
