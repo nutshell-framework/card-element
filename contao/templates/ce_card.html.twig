@@ -18,12 +18,12 @@
       {% endif %}
 
       {% if addText %}
-        <div class="card__description">{{ text|raw }}</div>
+        <div class="card__description">{{ text|insert_tag_raw }}</div>
       {% endif %}
 
       {% if url %}
         <div class="card__link">
-          <a href="{{ href }}" title="{{ linkTitle ?? '' }}"{{ (rel ?? '')|raw }}{{ (target ?? '')|raw }}>{{ link }}</a>
+          <a href="{{ href|insert_tag }}" title="{{ linkTitle ?? '' }}"{{ (rel ?? '')|raw }}{{ (target ?? '')|raw }}>{{ link|insert_tag }}</a>
         </div>
       {% endif %}
     </div>
