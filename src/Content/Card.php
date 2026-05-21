@@ -64,12 +64,15 @@ class Card extends ContentElement
             }
         }
 
-        $this->Template->url = $this->cardUrl;
-        $this->Template->href = $this->cardUrl;
+        $href = System::getContainer()->get('contao.insert_tag.parser')->replaceInline($this->cardUrl ?? '');
+
+        $this->Template->url = $href;
+        $this->Template->href = $href;
         $this->Template->link = $this->cardLinkTitle;
 
         if ($this->cardTitleText) {
-            $this->Template->linkTitle = StringUtil::specialchars($this->cardTitleText);
+            $titleText = System::getContainer()->get('contao.insert_tag.parser')->replaceInline($this->cardTitleText);
+            $this->Template->linkTitle = StringUtil::specialchars($titleText);
         }
 
         // Override the link target
