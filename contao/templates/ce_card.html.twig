@@ -14,7 +14,7 @@
   {% if addText or headline %}
     <div class="card__content">
       {% if headline %}
-        <{{ hl }} class="card__headline">{{ headline }}</{{ hl }}>
+        <{{ hl }} class="card__headline">{{ headline|insert_tag_raw }}</{{ hl }}>
       {% endif %}
 
       {% if addText %}
